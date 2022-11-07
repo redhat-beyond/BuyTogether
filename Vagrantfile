@@ -14,7 +14,6 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "fedora/34-cloud-base"
 
-
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
   
   config.vm.provider "virtualbox" do |vb|
@@ -73,6 +72,4 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  
-
 end
