@@ -1,5 +1,13 @@
 """
+<<<<<<< HEAD
+<<<<<<< HEAD
 ASGI config for BuyTogether project.
+=======
+ASGI config for buy_together project.
+>>>>>>> d00f754 (Adding a Django development environment)
+=======
+ASGI config for buy_together project.
+>>>>>>> d00f754 (Adding a Django development environment)
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +19,8 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'BuyTogether.settings')
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'buy_together.settings')
 
 application = get_asgi_application()
