@@ -1,6 +1,3 @@
- from django.contrib import admin
- from buy_together_app.models import Cart 
+# from django.contrib import admin
 
- # Register your model here .
-
- admin.site.register(Cart)
+# Register your models here.
