@@ -1,5 +1,5 @@
 import pytest
-from buy_together_app.models import Product
+from product.models import Product
 from django.core.exceptions import ValidationError
 
 QR = "W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY"

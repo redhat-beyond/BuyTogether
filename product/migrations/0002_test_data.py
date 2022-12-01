@@ -1,10 +1,10 @@
 from django.db import migrations, transaction
-from buy_together_app.models import Product
+from product.models import Product
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('buy_together_app', '0001_initial'),
+        ('product', '0001_initial'),
     ]
 
     def generate_data(apps, schema_editor):
