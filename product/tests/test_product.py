@@ -1,14 +1,12 @@
 import pytest
 from product.models import Product
 from django.core.exceptions import ValidationError
+from product.tests.File_for_tests_and_migrations import TEST_DATA
+
 
 QR = "W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY"
 NAME = "Banana"
 DESCRIPTION = "Good!"
-TEST_DATA = [
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY', 'Apple', 'Sweety!'),
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8ad', 'Banana', "Good!"),
-        ]
 
 
 @pytest.fixture
@@ -28,6 +26,12 @@ class TestProductModel:
         assert saved_product0 in Product.objects.all()
         Product.delete_product(saved_product0.qr_code)
         assert saved_product0 not in Product.objects.all()
+        res = True
+        try:
+            Product.delete_product("NOTEXISTEDTEST")
+        except Product.DoesNotExist:
+            res = False
+        assert not res
         saved_product0.save_product()
         assert saved_product0 in Product.objects.all()
 

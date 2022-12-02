@@ -1,5 +1,6 @@
 from django.db import migrations, transaction
 from product.models import Product
+from product.tests.File_for_tests_and_migrations import TEST_DATA
 
 
 class Migration(migrations.Migration):
@@ -8,10 +9,6 @@ class Migration(migrations.Migration):
     ]
 
     def generate_data(apps, schema_editor):
-        TEST_DATA = [
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY', 'Apple', 'Sweety!'),
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8ad', 'Banana', "Good!"),
-        ]
         with transaction.atomic():
             for qr, name, desc in TEST_DATA:
                 Product(qr_code=qr, product_name=name, description=desc).save()

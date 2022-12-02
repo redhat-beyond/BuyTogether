@@ -36,6 +36,8 @@ class Product(models.Model):
     @staticmethod
     def delete_product(prd_qr):
         try:
-            Product.filter_qr(prd_qr).delete()
-        except Exception:
-            pass
+            prod = Product.objects.get(qr_code=prd_qr)
+            prod.delete()
+        except Product.DoesNotExist as e:
+            raise e
+        return True
