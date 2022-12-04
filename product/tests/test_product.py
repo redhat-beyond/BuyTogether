@@ -1,14 +1,14 @@
 import pytest
 from product.models import Product
 from django.core.exceptions import ValidationError
+import importlib
+
+initial = importlib.import_module("product.migrations.0002_test_data")
+TEST_DATA = initial.TEST_DATA
 
 QR = "W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY"
 NAME = "Banana"
 DESCRIPTION = "Good!"
-TEST_DATA = [
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY', 'Apple', 'Sweety!'),
-            ('Q5o76MbdiNbXprNEnHfpcGWFp1CMF8ad', 'Banana', "Good!"),
-        ]
 
 
 @pytest.fixture
