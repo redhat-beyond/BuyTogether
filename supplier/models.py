@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django.core.exceptions import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist, ValidationError
 
 
 class User(models.Model):
@@ -83,3 +83,52 @@ class Supplier(User):
             returns a queryset containing all the Suppliers.
         """
         return Supplier.objects.all()
+
+    @staticmethod
+    def get_all_fields():
+        """Fetches list of all Supplier fields.
+
+        Args:
+            None.
+
+        Returns:
+            returns a list of all Supplier fields.
+        """
+        return ['user_name', 'first_name', 'last_name',
+                'password', 'user_type', 'business_name']
+
+    @staticmethod
+    def delete_supplier(supplier):
+        """Deletes supplier 'safely'
+
+        Args:
+            supplier - the Supplier wanted to be deleted
+
+        Returns:
+            None.
+
+        raises:
+        ObjectDoesNotExists error: if the supplier is not in DB.
+        """
+        if supplier not in Supplier.get_all_suppliers():
+            raise ObjectDoesNotExist
+        supplier.delete()
+
+    @staticmethod
+    def save_supplier(supplier):
+        """Saves new supplier 'safely'
+
+        Args:
+            supplier - the Supplier wanted to be saved.
+
+        Returns:
+            None.
+
+        raises:
+        ValidationError error: if fields input aren't valid.
+        """
+        try:
+            Supplier.full_clean(supplier)
+            supplier.save()
+        except ValidationError as error:
+            raise error
