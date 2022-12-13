@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'buy_together_app.apps.BuytogetherappConfig',
     'product.apps.ProductConfig',
     'supplier.apps.SupplierConfig',
+    'delivery_location.apps.DeliveryLocationConfig',
 ]
 
 MIDDLEWARE = [
