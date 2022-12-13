@@ -29,13 +29,9 @@ class Product(models.Model):
         try:
             Product.full_clean(self)
         except ValidationError as e:
-            self.delete_product(self.qr_code)
+            self.delete()
             raise e
         return self
 
-    @staticmethod
-    def delete_product(prd_qr):
-        try:
-            Product.filter_qr(prd_qr).delete()
-        except Exception:
-            pass
+    def delete_product(self):
+        Product.objects.get(qr_code=self.qr_code).delete()

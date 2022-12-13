@@ -24,12 +24,19 @@ def saved_product0(product0):
 
 class TestProductModel:
     @pytest.mark.django_db()
-    def test_save_product_and_delete_product(self, saved_product0):
+    def test_save_delete_product(self, saved_product0):
+        temp = Product(saved_product0.qr_code, saved_product0.product_name, saved_product0.description)
         assert saved_product0 in Product.objects.all()
-        Product.delete_product(saved_product0.qr_code)
+        saved_product0.delete_product()
         assert saved_product0 not in Product.objects.all()
-        saved_product0.save_product()
-        assert saved_product0 in Product.objects.all()
+        temp.save()
+        assert temp in Product.objects.all()
+
+    @pytest.mark.django_db()
+    def test_delete_non_existing_product(self):
+        test_doesnotexist = Product("DOESNOTEXIST", "TEST", "TEST")
+        with pytest.raises(Product.DoesNotExist):
+            test_doesnotexist.delete_product()
 
     @pytest.mark.django_db()
     def test_filter_by_qr(self, saved_product0):
