@@ -5,6 +5,7 @@ from client.models import Client
 from delivery_location.models import DeliveryLocation
 from product.models import Product
 import datetime
+from supplier_product.models import SupplierProduct
 
 
 class TestFields(Enum):
@@ -108,3 +109,23 @@ def delivery_location0(supplier0):
 @pytest.fixture
 def delivery_location1(supplier0):
     return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))
+
+
+@pytest.fixture
+def supplier_product0(saved_product0, saved_supplier0):
+    SUPPLIER_PRODUCT_ID = 123685
+    QUANTITY = 9
+    PRICE = 14
+    return SupplierProduct(
+        supplier_product_id=SUPPLIER_PRODUCT_ID,
+        qr_code=saved_product0,
+        user_name=saved_supplier0,
+        price=PRICE,
+        quantity=QUANTITY
+    )
+
+
+@pytest.fixture
+def saved_supplier_product0(supplier_product0):
+    supplier_product0.save()
+    return supplier_product0
