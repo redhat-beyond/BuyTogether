@@ -43,10 +43,9 @@ This project uses Pytest as its test framework.
 
 ---
 ## Review Requirements
-- When reviewing, confirm that the code accomplishes the requirements and the acceptance criteria by using one or both ways:
-A GitHub issue: the code fixes the problem.
-Adding a feature: elaborate in the commit the purpose of the code.
-Both cases should have accompanying unit tests that cover all the relevant edge cases.
+- When reviewing, confirm that the code accomplishes the requirements and the acceptance criteria (i.e. PR demands, code testing).
+Furthermore, confirm that the PR is linked with an issue.
+Each code adding should have accompanying unit tests that cover all the relevant edge cases.
 ---
 ## Your PR is merged!
 Congratulations.
