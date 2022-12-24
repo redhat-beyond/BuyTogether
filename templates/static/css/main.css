@@ -1,0 +1,14 @@
+  body{
+    background-color: rgb(215, 245, 185);
+  }
+  .projectName{
+      text-align: center;
+      font-size: 100px;
+      color: rgb(255, 0, 0);
+  }
+  .bigFont{
+      font-size: 30px;
+      margin-top: 80px;
+      margin-left: 20px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
