@@ -1,0 +1,35 @@
+body{
+    background-color: antiquewhite;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  .projectName{
+      text-align: center;
+      font-size: 100px;
+      color: purple;
+  }
+  .bigFont{
+      font-size: 30px;
+      margin-top: 80px;
+      margin-left: 20px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  .red{
+      color: red;
+  }
+.blue{
+    color: blue;
+}

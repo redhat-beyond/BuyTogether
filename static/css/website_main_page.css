@@ -1,0 +1,6 @@
+body{
+    background-image: url('../images/main_page_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
