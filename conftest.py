@@ -1,6 +1,7 @@
 import pytest
 from enum import Enum
 from supplier import models
+from client.models import Client
 
 
 class TestFields(Enum):
@@ -50,3 +51,18 @@ def saved_supplier0(supplier0):
     """
     supplier0.save()
     return supplier0
+
+
+@pytest.fixture()
+def client0():
+    return Client(user_name='liorsil',
+                  first_name='lior',
+                  last_name='silberman',
+                  password='1234qwer',
+                  area='Tel Aviv')
+
+
+@pytest.fixture
+def saved_client0(client0):
+    client0.save()
+    return client0
