@@ -20,7 +20,7 @@ class Client(User):
         Client.full_clean(self)
         self.save()
 
-    def delete_client(client):
+    def delete_client(self):
         """Deletes client 'safely'
         Args:
             client - the client wanted to be deleted
@@ -29,4 +29,4 @@ class Client(User):
         raises:
         ValueError error: if the client is not in DB.
         """
-        Client.objects.get(user_name=client.user_name).delete()
+        Client.objects.get(user_name=self.user_name).delete()
