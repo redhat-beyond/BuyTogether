@@ -10,16 +10,16 @@ class Migration(migrations.Migration):
     def generate_data(apps, schema_editor):
         test_data = [
             ('worldMaster', 'ash', 'katchamp', 'pokemon123', 'pokemon inc'),
-            ('ed', 'edd', 'eddy', 'jawbreaker101', 'jawbreaker inc'),
+            ('ededed', 'edd', 'eddy', 'jawbreaker101', 'jawbreaker inc'),
         ]
 
         with transaction.atomic():
             for userName, firstName, lastName, passwrd, businessName in test_data:
-                Supplier(user_name=userName,
-                         first_name=firstName,
-                         last_name=lastName,
-                         password=passwrd,
-                         business_name=businessName).save()
+                Supplier.save_supplier(Supplier(user_name=userName,
+                                                first_name=firstName,
+                                                last_name=lastName,
+                                                password=passwrd,
+                                                business_name=businessName))
 
     operations = [
         migrations.RunPython(generate_data),
