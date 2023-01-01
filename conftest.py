@@ -2,6 +2,9 @@ import pytest
 from enum import Enum
 from supplier import models
 from client.models import Client
+from delivery_location.models import DeliveryLocation
+from product.models import Product
+import datetime
 
 
 class TestFields(Enum):
@@ -66,3 +69,42 @@ def client0():
 def saved_client0(client0):
     client0.save()
     return client0
+
+
+@pytest.fixture
+def client1():
+    return Client(user_name="meitar1996",
+                  first_name="Meitar",
+                  last_name="rizner",
+                  password="1234",
+                  area="Yuval")
+
+
+@pytest.fixture
+def product0():
+    return Product(qr_code="W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY",
+                   product_name="Banana",
+                   description="Good!")
+
+
+@pytest.fixture
+def product1():
+    return Product(qr_code="Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XZ",
+                   product_name="Tomato",
+                   description="Sweety!")
+
+
+@pytest.fixture
+def saved_product0(product0):
+    product0.save_product()
+    return product0
+
+
+@pytest.fixture
+def delivery_location0(supplier0):
+    return DeliveryLocation(user_name=supplier0, location="Kiryat Shemona", date=datetime.date(2022, 12, 30))
+
+
+@pytest.fixture
+def delivery_location1(supplier0):
+    return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))

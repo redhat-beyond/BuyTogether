@@ -6,21 +6,6 @@ import importlib
 initial = importlib.import_module("product.migrations.0002_test_data")
 TEST_DATA = initial.TEST_DATA
 
-QR = "W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY"
-NAME = "Banana"
-DESCRIPTION = "Good!"
-
-
-@pytest.fixture
-def product0():
-    return Product(qr_code=QR, product_name=NAME, description=DESCRIPTION)
-
-
-@pytest.fixture
-def saved_product0(product0):
-    product0.save_product()
-    return product0
-
 
 class TestProductModel:
     @pytest.mark.django_db()
