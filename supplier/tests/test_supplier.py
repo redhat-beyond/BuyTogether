@@ -28,7 +28,7 @@ class TestSupplierModel:
     @pytest.mark.django_db()
     def test_fail_to_save_supplier(self, supplier0):
         with pytest.raises(ValidationError):
-            supplier0.user_name = ''
+            supplier0.user_name = '123'
             Supplier.save_supplier(supplier0)
 
     @pytest.mark.django_db()

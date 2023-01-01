@@ -17,6 +17,9 @@ class TestFields(Enum):
     BUSINESS_NAME_TEST = 'hair_salon_inc'
 
 
+TestFields.__test__ = False
+
+
 class Fields(Enum):
     user_name = 1
     first_name = 2
@@ -54,17 +57,23 @@ def saved_supplier0(supplier0):
     Returns:
         Supplier fixture.
     """
-    supplier0.save()
+    models.Supplier.save_supplier(supplier0)
     return supplier0
 
 
 @pytest.fixture()
 def client0():
-    return Client(user_name='liorsil',
-                  first_name='lior',
-                  last_name='silberman',
-                  password='1234qwer',
-                  area='Tel Aviv')
+    return Client(user_name='liorsil1',
+                  first_name='lior1',
+                  last_name='silberman1',
+                  password='1234qwer1',
+                  area='Tel Aviv1')
+
+
+@pytest.fixture
+def saved_client0(client0):
+    client0.save_client()
+    return client0
 
 
 @pytest.fixture
@@ -74,12 +83,6 @@ def client1():
                   last_name="rizner",
                   password="1234",
                   area="Yuval")
-
-
-@pytest.fixture
-def saved_client0(client0):
-    client0.save()
-    return client0
 
 
 @pytest.fixture
@@ -138,6 +141,15 @@ def delivery_location0(supplier0):
 @pytest.fixture
 def delivery_location1(supplier0):
     return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))
+
+
+@pytest.fixture
+def save_objects(delivery_location0, supplier0, supplier_product0, client0, product0):
+    client0.save()
+    product0.save()
+    supplier0.save()
+    supplier_product0.save()
+    delivery_location0.save()
 
 
 @pytest.fixture
