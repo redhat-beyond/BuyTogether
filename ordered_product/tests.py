@@ -3,15 +3,6 @@ from ordered_product.models import OrderedProduct
 from django.core.exceptions import ValidationError
 
 
-@pytest.fixture
-def save_objects(delivery_location0, supplier0, supplier_product0, client0, product0):
-    client0.save()
-    product0.save()
-    supplier0.save()
-    supplier_product0.save()
-    delivery_location0.save()
-
-
 class TestOrderedProductModel():
     @pytest.mark.django_db()
     def test_save_and_delete_ordered_product(self, ordered_product0, save_objects):
