@@ -1,0 +1,18 @@
+body{
+    background-color: rgb(243, 243, 243);
+}
+.container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container_A{
+    background-color: rgb(229, 127, 2);
+    height: 500px;
+    width: 30%
+}
+
+.container_B{background-color: brown;
+}
