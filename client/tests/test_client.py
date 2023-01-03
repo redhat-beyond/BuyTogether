@@ -48,7 +48,7 @@ class TestClientModel:
         short_password = '123'
         client0.password = short_password
         with pytest.raises(ValidationError):
-            client0.save_client()
+            Client.full_clean(client0)
 
     @pytest.mark.django_db()
     def test_fail_to_add_client_area(self, client0):

@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from buy_together_app.models import CustomUser
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 
 class Client(CustomUser):
@@ -19,6 +20,7 @@ class Client(CustomUser):
         raises:
         ValidationError error: if fields input aren't valid.
         """
+        self.password = make_password(salt="Random", password=self.password)
         User.objects.create_user(username=self.user_name,
                                  password=self.password)
         self.client_account = User.objects.get(username=self.user_name)
