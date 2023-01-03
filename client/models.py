@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 
 class Client(models.Model):
@@ -18,6 +19,9 @@ class Client(models.Model):
         raises:
         ValidationError error: if fields input aren't valid.
         """
+        User.objects.create_user(username=self.user_name,
+                                 password=self.password)
+        self.client_account = User.objects.get(username=self.user_name)
         Client.full_clean(self)
         self.save()
 

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('supplier', '0001_initial'),
+        ('supplier', '0006_rename_ssupplier_account_supplier_supplier_account'),
     ]
 
     def generate_data(apps, schema_editor):

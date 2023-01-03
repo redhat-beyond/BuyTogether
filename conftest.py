@@ -18,6 +18,9 @@ class TestFields(Enum):
     BUSINESS_NAME_TEST = 'hair_salon_inc'
 
 
+TestFields.__test__ = False
+
+
 class Fields(Enum):
     user_name = 1
     first_name = 2

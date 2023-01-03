@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %} buyTogether {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/supplier_sign_up.css' %}" />
+  </head>
+
+  <body>
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-6">
+            <div class="card shadow-sm">
+              <article class="card-body mx-auto">
+                <h4 class="card-title mt-3 text-center">Create Supplier</h4>
+                <form method="POST">
+                  {% csrf_token %}
+                  <div>
+                    <label>Username:</label><span>{{form.user_name}}</span>
+                  </div>
+                  <div>
+                    <label>Password:</label><span>{{form.password}}</span>
+                  </div>
+                  <div>
+                    <label>First_Name:</label><span>{{form.first_name}}</span>
+                  </div>
+                  <div>
+                    <label>Last_Name:</label><span>{{form.last_name}}</span>
+                  </div>
+                  <div>
+                    <label>Business_Name:</label><span>{{form.business_name}}</span>
+                  </div>
+                  <div class="d-flex justify-content-center m-3">
+                    <button type="submit">Register</button>
+                  </div>
+                  <p class="text-center">
+                    Have an account? <a href="{% url 'login' %}">Log In</a>
+                  </p>
+                  <p class="text-center">
+                    <a href="/">Home</a>
+                  </p>
+                </form>
+                {% for i in message%}
+                    <h5>{{i}}</h5>
+                {% endfor %}
+              </article>
+            </div>
+            <!-- card.// -->
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

@@ -25,6 +25,9 @@ class Migration(migrations.Migration):
                 ('business_name', models.CharField(help_text='Business Name',
                                                    max_length=32,
                                                    validators=[django.core.validators.MinLengthValidator(6)])),
+                ('supplier_account', models.OneToOneField(null=True,
+                                                          on_delete=django.db.models.deletion.CASCADE,
+                                                          to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

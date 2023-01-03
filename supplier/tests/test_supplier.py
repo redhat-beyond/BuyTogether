@@ -1,6 +1,7 @@
 import pytest
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from supplier.models import Supplier
+from django.contrib.auth.hashers import make_password
 
 
 class TestSupplierModel:

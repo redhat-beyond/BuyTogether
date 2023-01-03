@@ -46,5 +46,9 @@ class Supplier(models.Model):
         raises:
         ValidationError error: if fields input aren't valid.
         """
+        supplier.password = make_password(salt="Random", password=supplier.password)
+        User.objects.create_user(username=supplier.user_name,
+                                 password=supplier.password)
+        supplier.supplier_account = User.objects.get(username=supplier.user_name)
         Supplier.full_clean(supplier)
         supplier.save()
