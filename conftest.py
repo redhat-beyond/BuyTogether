@@ -4,8 +4,9 @@ from supplier import models
 from client.models import Client
 from delivery_location.models import DeliveryLocation
 from product.models import Product
-import datetime
 from supplier_product.models import SupplierProduct
+from ordered_product.models import OrderedProduct
+import datetime
 
 
 class TestFields(Enum):
@@ -67,12 +68,6 @@ def client0():
 
 
 @pytest.fixture
-def saved_client0(client0):
-    client0.save()
-    return client0
-
-
-@pytest.fixture
 def client1():
     return Client(user_name="meitar1996",
                   first_name="Meitar",
@@ -82,10 +77,16 @@ def client1():
 
 
 @pytest.fixture
+def saved_client0(client0):
+    client0.save()
+    return client0
+
+
+@pytest.fixture
 def product0():
-    return Product(qr_code="W5P76MbdiNbXprNEnHfpcGWFp1CMF8XY",
-                   product_name="Banana",
-                   description="Good!")
+    return Product(qr_code="Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY",
+                   product_name="Apple",
+                   description="Sweety!")
 
 
 @pytest.fixture
@@ -99,16 +100,6 @@ def product1():
 def saved_product0(product0):
     product0.save_product()
     return product0
-
-
-@pytest.fixture
-def delivery_location0(supplier0):
-    return DeliveryLocation(user_name=supplier0, location="Kiryat Shemona", date=datetime.date(2022, 12, 30))
-
-
-@pytest.fixture
-def delivery_location1(supplier0):
-    return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))
 
 
 @pytest.fixture
@@ -126,6 +117,33 @@ def supplier_product0(saved_product0, saved_supplier0):
 
 
 @pytest.fixture
+def supplier_product1(product1, supplier0):
+    return SupplierProduct(qr_code=product1,
+                           user_name=supplier0,
+                           price=5,
+                           quantity=50)
+
+
+@pytest.fixture
 def saved_supplier_product0(supplier_product0):
     supplier_product0.save()
     return supplier_product0
+
+
+@pytest.fixture
+def delivery_location0(supplier0):
+    return DeliveryLocation(user_name=supplier0, location="Kiryat Shemona", date=datetime.date(2022, 12, 30))
+
+
+@pytest.fixture
+def delivery_location1(supplier0):
+    return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))
+
+
+@pytest.fixture
+def ordered_product0(delivery_location0, client0, supplier_product0):
+    return OrderedProduct(
+        delivery_location_id=delivery_location0,
+        user_name=client0,
+        supplier_product_id=supplier_product0,
+        quantity=3)
