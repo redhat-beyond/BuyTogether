@@ -16,8 +16,10 @@ Including another URLconf
 from django.urls import path
 from buy_together_app import views
 
+
 urlpatterns = [
     path('', views.main_page, name="Main Page"),
     path('description', views.description_page, name="Website Description"),
     path('login', views.log_in_page, name="Log In"),
+    path('not_allowed', views.not_allowed_page, name="Not allowed"),
 ]

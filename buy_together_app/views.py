@@ -22,3 +22,7 @@ def log_in_page(request):
         else:
             messages.info(request, 'User name OR Password is incorrect')
     return render(request, 'buy_together_app/login.html')
+
+
+def not_allowed_page(request):
+    return render(request, 'buy_together_app/not_allowed.html')
