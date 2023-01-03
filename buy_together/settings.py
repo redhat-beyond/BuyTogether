@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'supplier.apps.SupplierConfig',
     'delivery_location.apps.DeliveryLocationConfig',
     'client.apps.ClientConfig',
+    'supplier_product.apps.SupplierProductConfig',
 ]
 
 MIDDLEWARE = [
