@@ -45,7 +45,8 @@ class TestClientModel:
 
     @pytest.mark.django_db()
     def test_fail_to_add_client_password(self, client0):
-        short_password = '123'
+        # Password should be with length 6 or more
+        short_password = '12345'
         client0.password = short_password
         with pytest.raises(ValidationError):
             Client.full_clean(client0)
