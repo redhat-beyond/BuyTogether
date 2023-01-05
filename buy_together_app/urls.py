@@ -19,4 +19,7 @@ from buy_together_app import views
 urlpatterns = [
     path('', views.main_page, name="Main Page"),
     path('description', views.description_page, name="Website Description"),
+    path('signup', views.signup_user, name="Sign Up"),
+    path('signup/supplier', views.signup_supplier, name="Sign Up Supplier"),
+    path('signup/client', views.signup_client, name="Sign Up Client"),
 ]
