@@ -2,6 +2,7 @@ import pytest
 from conftest import Fields, TestFields
 from django.core.exceptions import FieldDoesNotExist, ValidationError, ObjectDoesNotExist
 from supplier.models import Supplier
+from django.contrib.auth.hashers import make_password
 
 
 class TestSupplierModel:
@@ -28,7 +29,7 @@ class TestSupplierModel:
     @pytest.mark.django_db()
     def test_fail_to_save_supplier(self, supplier0):
         with pytest.raises(ValidationError):
-            supplier0.user_name = ''
+            supplier0.user_name = '123'
             Supplier.save_supplier(supplier0)
 
     @pytest.mark.django_db()
@@ -48,8 +49,13 @@ class TestSupplierModel:
         supplier_fields = [field.name for field in Supplier._meta.get_fields()]
         for attri, testAttri in zip(Fields, TestFields):
             assert attri.name in supplier_fields
-            assert saved_supplier0 in Supplier.filter_by_field(attri.name,
-                                                               testAttri.value)
+            if (attri.name == "password"):
+                assert saved_supplier0 in Supplier.filter_by_field(attri.name,
+                                                                   make_password(salt="Random",
+                                                                                 password=testAttri.value))
+            else:
+                assert saved_supplier0 in Supplier.filter_by_field(attri.name,
+                                                                   testAttri.value)
 
     @pytest.mark.django_db()
     def test_non_exists_field_value(self, saved_supplier0):

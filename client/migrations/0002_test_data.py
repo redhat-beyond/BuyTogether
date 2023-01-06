@@ -4,13 +4,13 @@ from client.models import Client
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('client', '0001_initial'),
+        ('client', '0006_rename_cclient_account_client_client_account'),
     ]
 
     def generate_data(apps, schema_editor):
         test_data = [
-            ('liorsil1', 'lior', 'silber', '1234qwer!', 'Yuvalim'),
-            ('id', 'ido', 'silber', 'qwer1234!', 'Beit Yannai'),
+            ('liorsil', 'lior', 'silber', '1234qwer!', 'Yuvalim'),
+            ('ididid', 'ido', 'silber', 'qwer1234!', 'Beit Yannai'),
         ]
 
         with transaction.atomic():
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                        first_name=firstName,
                        last_name=lastName,
                        password=passwrd,
-                       area=area).save()
+                       area=area).save_client()
 
     operations = [
         migrations.RunPython(generate_data),
