@@ -81,3 +81,8 @@ class TestOrderedProductModel():
     def test_invalid_order(self, client0, delivery_location0, supplier_product0, save_objects):
         with pytest.raises(ValidationError):
             OrderedProduct.order(delivery_location0, client0, supplier_product0, -1)
+
+    @pytest.mark.django_db()
+    def test_total_price(self, ordered_product0, save_objects):
+        ordered_product0.save_ordered_product()
+        assert ordered_product0.total_price() == ordered_product0.quantity*ordered_product0.supplier_product_id.price
