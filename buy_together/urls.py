@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('buy_together_app.urls')),
     path('products/', include('product.urls')),
     path('suppliers/', include('supplier.urls')),
+    path('ordered_product/', include('ordered_product.urls'))
 ]

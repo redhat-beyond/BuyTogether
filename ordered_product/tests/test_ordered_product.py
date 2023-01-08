@@ -55,8 +55,7 @@ class TestOrderedProductModel():
         ordered_product0.quantity = 3
         ordered_product0.save_ordered_product()
         ordered_product0.increase_quantity(6)
-        assert ordered_product0.quantity == 9
-        assert ordered_product0 in OrderedProduct.objects.all()
+        assert OrderedProduct.objects.get(id=ordered_product0.id).quantity == 9
 
     @pytest.mark.django_db()
     def test_order(self, ordered_product0):

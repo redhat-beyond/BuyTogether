@@ -45,6 +45,15 @@ def supplier0():
                            business_name=TestFields['BUSINESS_NAME_TEST'].value)
 
 
+@pytest.fixture()
+def supplier1():
+    return models.Supplier(supplier_account=User.objects.create_user(username='meitar1234',
+                           first_name='meitar',
+                           last_name='rizner',
+                           password='123456',),
+                           business_name='vegShop')
+
+
 @pytest.fixture
 def saved_supplier0(supplier0):
     """Saves the supplier fixture.
@@ -57,6 +66,12 @@ def saved_supplier0(supplier0):
     """
     models.Supplier.save_supplier(supplier0)
     return supplier0
+
+
+@pytest.fixture
+def saved_supplier1(supplier1):
+    models.Supplier.save_supplier(supplier1)
+    return supplier1
 
 
 @pytest.fixture()
@@ -160,6 +175,16 @@ def delivery_location1(delivery_location0):
 
 
 @pytest.fixture
+def delivery_location2(saved_supplier0):
+    return DeliveryLocation(user_name=saved_supplier0, location="Tel Aviv", date=datetime.date(2022, 12, 30))
+
+
+@pytest.fixture
+def delivery_location3(saved_supplier1):
+    return DeliveryLocation(user_name=saved_supplier1, location="Tel Aviv", date=datetime.date(2022, 12, 30))
+
+
+@pytest.fixture
 def ordered_product0(delivery_location0, saved_client0, saved_product0):
     supprod = SupplierProduct(
         supplier_product_id=63147,
@@ -175,3 +200,8 @@ def ordered_product0(delivery_location0, saved_client0, saved_product0):
         user_name=saved_client0,
         supplier_product_id=supprod,
         quantity=3)
+
+
+@pytest.fixture
+def client0_login(client, saved_client0):
+    client.force_login(user=saved_client0.client_account)
