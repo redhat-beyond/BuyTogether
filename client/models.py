@@ -1,9 +1,10 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from buy_together_app.models import User
+from django.contrib.auth.models import User
 
 
-class Client(User):
+class Client(models.Model):
+    client_account = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     area = models.CharField(max_length=32,
                             validators=[MinLengthValidator(1)],
                             help_text="area")
@@ -20,7 +21,7 @@ class Client(User):
         Client.full_clean(self)
         self.save()
 
-    def delete_client(client):
+    def delete_client(self):
         """Deletes client 'safely'
         Args:
             client - the client wanted to be deleted
@@ -29,4 +30,4 @@ class Client(User):
         raises:
         ValueError error: if the client is not in DB.
         """
-        Client.objects.get(user_name=client.user_name).delete()
+        User.objects.get(username=self.client_account.username).delete()
