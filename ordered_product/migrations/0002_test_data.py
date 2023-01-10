@@ -6,56 +6,56 @@ from product.models import Product
 from supplier.models import Supplier
 from ordered_product.models import OrderedProduct
 import datetime
+from django.contrib.auth.models import User
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('ordered_product', '0001_initial'),
+        ('ordered_product', '0002_initial'),
     ]
 
     def generate_data(apps, schema_editor):
 
         test_data = [
-                3, 4
+                [3, "bestSup1", "bestSup2", 1000], [4, "bestSup3", "bestSup4", 1001]
         ]
 
         with transaction.atomic():
-            for qn in test_data:
-                sup = Supplier(user_name="bestSup",
-                               first_name="Yuval",
-                               last_name="Cohen",
-                               password="1234",
+            for qn, sup_usr, cli_usr, sup_prd_id in test_data:
+                usr = User.objects.create_user(username=sup_usr,
+                                               first_name="Yuval",
+                                               last_name="Cohen",
+                                               password="HaloHalo2",
+                                               )
+                sup = Supplier(supplier_account=usr,
                                business_name="bestSup")
-                sup.save()
+                Supplier.save_supplier(sup)
 
-                client = Client(user_name="meitar1996",
+                client = Client(client_account=User.objects.create_user(username=cli_usr,
                                 first_name="Meitar",
                                 last_name="Rizner",
-                                password="123456",
+                                password="123456",),
                                 area="North Israel")
-                client.save()
+                client.save_client()
 
-                product = Product(qr_code="Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY",
-                                  product_name="Apple",
-                                  description="Sweety!")
-                product.save()
+                product = Product.objects.get(qr_code="Q5o76MbdiNbXprNEnHfpcGWFp1CMF8XY")
 
-                sup_product = SupplierProduct(supplier_product_id=1,
+                sup_product = SupplierProduct(supplier_product_id=sup_prd_id,
                                               qr_code=product,
                                               user_name=sup,
                                               price=10,
                                               quantity=50)
-                sup_product.save()
+                SupplierProduct.save_sup_product(sup_product)
 
                 del_location = DeliveryLocation(user_name=sup,
                                                 location="Kiryat Shmona",
                                                 date=datetime.date(2022, 12, 30))
-                del_location.save()
+                del_location.add_delivery_location()
 
                 OrderedProduct(delivery_location_id=del_location,
                                user_name=client,
                                supplier_product_id=sup_product,
-                               quantity=qn).save()
+                               quantity=qn).save_ordered_product()
 
     operations = [
         migrations.RunPython(generate_data),

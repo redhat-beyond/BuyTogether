@@ -7,6 +7,7 @@ from product.models import Product
 from supplier_product.models import SupplierProduct
 from ordered_product.models import OrderedProduct
 import datetime
+from django.contrib.auth.models import User
 
 
 class TestFields(Enum):
@@ -37,10 +38,10 @@ def supplier0():
     Returns:
         Supplier fixture.
     """
-    return models.Supplier(user_name=TestFields['USER_NAME_TEST'].value,
+    return models.Supplier(supplier_account=User.objects.create_user(username=TestFields['USER_NAME_TEST'].value,
                            first_name=TestFields['FIRST_NAME_TEST'].value,
                            last_name=TestFields['LAST_NAME_TEST'].value,
-                           password=TestFields['PASSWORD_TEST'].value,
+                           password=TestFields['PASSWORD_TEST'].value,),
                            business_name=TestFields['BUSINESS_NAME_TEST'].value)
 
 
@@ -54,32 +55,38 @@ def saved_supplier0(supplier0):
     Returns:
         Supplier fixture.
     """
-    supplier0.save()
+    models.Supplier.save_supplier(supplier0)
     return supplier0
 
 
 @pytest.fixture()
 def client0():
-    return Client(user_name='liorsil',
+    return Client(client_account=User.objects.create_user(username='liorsil311',
                   first_name='lior',
                   last_name='silberman',
-                  password='1234qwer',
+                  password='1234qwer',),
                   area='Tel Aviv')
 
 
 @pytest.fixture
 def client1():
-    return Client(user_name="meitar1996",
+    return Client(client_account=User.objects.create_user(username="meitar1996",
                   first_name="Meitar",
                   last_name="rizner",
-                  password="1234",
+                  password="1234",),
                   area="Yuval")
 
 
 @pytest.fixture
 def saved_client0(client0):
-    client0.save()
+    client0.save_client()
     return client0
+
+
+@pytest.fixture
+def saved_client1(client1):
+    client1.save_client()
+    return client1
 
 
 @pytest.fixture
@@ -103,6 +110,12 @@ def saved_product0(product0):
 
 
 @pytest.fixture
+def saved_product1(product1):
+    product1.save_product()
+    return product1
+
+
+@pytest.fixture
 def supplier_product0(saved_product0, saved_supplier0):
     SUPPLIER_PRODUCT_ID = 123685
     QUANTITY = 9
@@ -117,33 +130,48 @@ def supplier_product0(saved_product0, saved_supplier0):
 
 
 @pytest.fixture
-def supplier_product1(product1, supplier0):
-    return SupplierProduct(qr_code=product1,
-                           user_name=supplier0,
+def supplier_product1(saved_product1, saved_supplier0):
+    return SupplierProduct(qr_code=saved_product1,
+                           user_name=saved_supplier0,
                            price=5,
                            quantity=50)
 
 
 @pytest.fixture
 def saved_supplier_product0(supplier_product0):
-    supplier_product0.save()
+    SupplierProduct.save_sup_product(supplier_product0)
     return supplier_product0
 
 
 @pytest.fixture
-def delivery_location0(supplier0):
-    return DeliveryLocation(user_name=supplier0, location="Kiryat Shemona", date=datetime.date(2022, 12, 30))
+def saved_supplier_product1(supplier_product1):
+    SupplierProduct.save_sup_product(supplier_product1)
+    return supplier_product1
 
 
 @pytest.fixture
-def delivery_location1(supplier0):
-    return DeliveryLocation(user_name=supplier0, location="Haifa", date=datetime.date(2022, 12, 31))
+def delivery_location0(saved_supplier0):
+    return DeliveryLocation(user_name=saved_supplier0, location="Kiryat Shemona", date=datetime.date(2022, 12, 30))
 
 
 @pytest.fixture
-def ordered_product0(delivery_location0, client0, supplier_product0):
+def delivery_location1(delivery_location0):
+    return DeliveryLocation(user_name=delivery_location0.user_name, location="Haifa", date=datetime.date(2022, 12, 31))
+
+
+@pytest.fixture
+def ordered_product0(delivery_location0, saved_client0, saved_product0):
+    supprod = SupplierProduct(
+        supplier_product_id=63147,
+        qr_code=saved_product0,
+        user_name=delivery_location0.user_name,
+        price=142,
+        quantity=91
+    )
+    SupplierProduct.save_sup_product(supprod)
+    delivery_location0.add_delivery_location()
     return OrderedProduct(
         delivery_location_id=delivery_location0,
-        user_name=client0,
-        supplier_product_id=supplier_product0,
+        user_name=saved_client0,
+        supplier_product_id=supprod,
         quantity=3)

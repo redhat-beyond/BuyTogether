@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
     def generate_data(apps, schema_editor):
         with transaction.atomic():
             for qr, name, desc in TEST_DATA:
-                Product(qr_code=qr, product_name=name, description=desc).save()
+                Product(qr_code=qr, product_name=name, description=desc).save_product()
 
     operations = [
         migrations.RunPython(generate_data),
