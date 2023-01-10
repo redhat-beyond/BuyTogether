@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 
 
-class User(models.Model):
+class CustomUser(models.Model):
     """An abstract class which holds basic user data:
 
     Attributes:
@@ -18,9 +18,11 @@ class User(models.Model):
                                  validators=[MinLengthValidator(6)],
                                  help_text="User Name")
     first_name = models.CharField(max_length=32,
+                                  null=False,
                                   validators=[MinLengthValidator(1)],
                                   help_text="First Name")
     last_name = models.CharField(max_length=32,
+                                 null=False,
                                  validators=[MinLengthValidator(1)],
                                  help_text="Last Name")
     password = models.CharField(max_length=16,

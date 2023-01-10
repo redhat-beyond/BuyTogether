@@ -19,4 +19,5 @@ from buy_together_app import views
 urlpatterns = [
     path('', views.main_page, name="Main Page"),
     path('description', views.description_page, name="Website Description"),
+    path('login', views.log_in_page, name="Log In"),
 ]
