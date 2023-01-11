@@ -37,8 +37,8 @@ class DeliveryLocation(models.Model):
         return DeliveryLocation.objects.filter(user_name=supplier, location=specific_location)
 
     @staticmethod
-    def filter_by_location(supplier):
-        return DeliveryLocation.objects.filter(user_name=supplier)
+    def filter_by_location(location):
+        return DeliveryLocation.objects.filter(location=location)
 
     @staticmethod
     def get_all_delivery_locations():

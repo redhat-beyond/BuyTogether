@@ -1,5 +1,6 @@
 from django.db import migrations, transaction
 from client.models import Client
+from django.contrib.auth.models import User
 
 
 class Migration(migrations.Migration):
@@ -10,16 +11,16 @@ class Migration(migrations.Migration):
     def generate_data(apps, schema_editor):
         test_data = [
             ('liorsil1', 'lior', 'silber', '1234qwer!', 'Yuvalim'),
-            ('id', 'ido', 'silber', 'qwer1234!', 'Beit Yannai'),
+            ('ididid', 'ido', 'silber', 'qwer1234!', 'Beit Yannai'),
         ]
 
         with transaction.atomic():
             for userName, firstName, lastName, passwrd, area in test_data:
-                Client(user_name=userName,
-                       first_name=firstName,
-                       last_name=lastName,
-                       password=passwrd,
-                       area=area).save()
+                Client(client_account=User.objects.create_user(username=userName,
+                                                               password=passwrd,
+                                                               first_name=firstName,
+                                                               last_name=lastName,),
+                       area=area).save_client()
 
     operations = [
         migrations.RunPython(generate_data),
