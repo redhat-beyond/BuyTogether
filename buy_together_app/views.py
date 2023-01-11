@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from client.forms import ClientForm
+from supplier.forms import SupplierForm
+from django.db import IntegrityError
 
 
 def main_page(request):
@@ -26,3 +29,32 @@ def log_in_page(request):
 
 def not_allowed_page(request):
     return render(request, 'buy_together_app/not_allowed.html')
+
+
+def signup_user(request, msg="", invalid={}):
+    supplier_form = SupplierForm()
+    client_form = ClientForm()
+    context = {'supplier_form': supplier_form, 'client_form': client_form, 'message': [msg], 'invalid': invalid}
+    return render(request, 'buy_together_app/sign_up.html', context)
+
+
+def signup_supplier(request):
+    return signup(request, SupplierForm)
+
+
+def signup_client(request):
+    return signup(request, ClientForm)
+
+
+def signup(request, form_type):
+    if request.method == 'POST':
+        form = form_type(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except IntegrityError:
+                return signup_user(request, 'Username is taken')
+            return redirect('Main Page')
+        return signup_user(request, msg="Request is invalid", invalid=form.errors.as_json())
+    else:
+        return signup_user(request, 'Please sign up')

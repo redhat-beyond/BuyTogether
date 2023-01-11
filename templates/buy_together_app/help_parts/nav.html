@@ -2,7 +2,10 @@
     <div class="container">
             <a class="text-primary" href="/"><h1>Home</h1></a>
             {% if request.user.is_authenticated %}
-            <p style="color: beige;">hello {{ request.user.username }}!</p>
+              <p style="color: beige;">hello {{ request.user.username }}!</p>
+            {% else %}
+              <a class="text-primary" href="/signup"><h5>Sign Up</h5></a>
             {% endif %}
     </div>
   </nav>
+</nav>

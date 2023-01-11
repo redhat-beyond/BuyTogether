@@ -22,4 +22,7 @@ urlpatterns = [
     path('description', views.description_page, name="Website Description"),
     path('login', views.log_in_page, name="Log In"),
     path('not_allowed', views.not_allowed_page, name="Not allowed"),
+    path('signup', views.signup_user, name="Sign Up"),
+    path('signup/supplier', views.signup_supplier, name="Sign Up Supplier"),
+    path('signup/client', views.signup_client, name="Sign Up Client"),
 ]
