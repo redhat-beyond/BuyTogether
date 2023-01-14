@@ -13,14 +13,47 @@
 <body>
     {% include 'buy_together_app/help_parts/nav.html' %}
 
-	<div class="container mt-5 p-3 align-center">
-		<div class="container_A d-flex justify-content-center">
-			<p> here will be something</p>
+	<div class="container">
+		<div class="container-A d-flex justify-content-center">
+			<dov> here will be something</p>
 		</div>
-		<div class="container_A d-flex justify-content-center">
-			<p> here will be something</p>
+		<div class="container-B">
+			
+		</div>
+		<div class="container-text-table">
+			<p class="text">Your items:</p>
+			<div class="container-C justify-content-center rounded">
+				<table class="table table-bordered table-striped mb-0">
+					<thead>
+						<tr>
+							<th scope="col">Product name</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for sup_product in supplier_products %}
+						<tr>
+							<td>{{sup_product.qr_code.product_name}}</td>
+							<td>{{sup_product.quantity}}</td>
+							<td>{{sup_product.price}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<form><button type="submit" name="all_products" class="btn btn-outline-success get_all_button">All Products</button></form>
+				{% for message in messages %}
+               	<p class="text"> {{message}} </p>
+           		{% endfor %}
+			</div>
+			<form class="input-group form-outline">
+				<input type="search" class="form-control" name="searched_product" placeholder="Search Product" class="form-control" />
+				<button type="submit" class="btn btn-primary">
+				  <i class="fas fa-search"></i>
+				</button>
+			</form>
+		</div>
 
-		</div>
 	</div>
 </body>
 
