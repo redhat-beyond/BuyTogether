@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %} buyTogether {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}" />
+  </head>
+
+  <body>
+      <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="col-md-6">
+            <div class="card shadow-sm">
+              <article class="card-body mx-auto">
+                <h4 class="card-title mt-3 text-center">Create User</h4>
+                <form method="POST" class="SupplierOn" action="/signup/supplier">
+                  {% csrf_token %}
+                  <div>
+                    <label>Username:</label><span>{{supplier_form.username}}</span>
+                  </div>
+                  <div>
+                    <label>Password:</label><span>{{supplier_form.password}}</span>
+                  </div>
+                  <div>
+                    <label>First_Name:</label><span>{{supplier_form.first_name}}</span>
+                  </div>
+                  <div>
+                    <label>Last_Name:</label><span>{{supplier_form.last_name}}</span>
+                  </div>
+                  <div>
+                    <label>Business_Name:</label><span>{{supplier_form.business_name}}</span>
+                  </div>
+                  <div class="d-flex justify-content-center m-3">
+                    <button type="submit">Register</button>
+                  </div>
+                  <p class="text-center">
+                    <a href="/">Home</a>
+                  </p>
+                </form>
+                <form method="POST" class="ClientOn" action="/signup/client">
+                    {% csrf_token %}
+                    <div>
+                      <label>Username:</label><span>{{client_form.username}}</span>
+                    </div>
+                    <div>
+                      <label>Password:</label><span>{{client_form.password}}</span>
+                    </div>
+                    <div>
+                      <label>First_Name:</label><span>{{client_form.first_name}}</span>
+                    </div>
+                    <div>
+                      <label>Last_Name:</label><span>{{client_form.last_name}}</span>
+                    </div>
+                    <div>
+                      <label>Area:</label><span>{{client_form.area}}</span>
+                    </div>
+                    <div class="d-flex justify-content-center m-3">
+                      <button type="submit">Register</button>
+                    </div>
+                    <p class="text-center">
+                      <a href="/">Home</a>
+                    </p>
+                  </form>
+                <p>Please select your user:</p>
+                <input type="radio" id="SupplierAsUser" name="supplier" value="supplier" checked/>
+                <label for="age1">Supplier</label><br>
+                <input type="radio" id="ClientAsUser" name="client" value="client">
+                <label for="age2">Client</label><br>  
+                <h5>Username should be at least 6</h5>
+                <h5>Password should be at least 6</h5>
+                <h5 class="ClientOn">Area should be at least 1</h5>
+                <h5 class="SupplierOn">Business_name should be at least 6</h5>
+                {% for i in message%}
+                <h5 class="text-danger">{{i}}</h5>
+                {% endfor %}
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="{% static 'js/sign_up.js' %}"></script>
+  </body>
+</html>
