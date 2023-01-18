@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from client.forms import ClientForm
 from supplier.forms import SupplierForm
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 
 def main_page(request):
@@ -58,3 +59,9 @@ def signup(request, form_type):
         return signup_user(request, msg="Request is invalid", invalid=form.errors.as_json())
     else:
         return signup_user(request, 'Please sign up')
+
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect('Main Page')
