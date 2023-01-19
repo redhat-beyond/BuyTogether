@@ -44,6 +44,7 @@ class OrderedProduct(models.Model):
 
     def increase_quantity(self, qn):
         self.quantity += qn
+        self.save_ordered_product()
 
     @staticmethod
     def order(delivery, client, supplier_product, qn):
@@ -53,3 +54,6 @@ class OrderedProduct(models.Model):
             ordered_product = OrderedProduct.objects.create(delivery_location_id=delivery, user_name=client,
                                                             supplier_product_id=supplier_product, quantity=qn)
             return ordered_product.save_ordered_product()
+
+    def total_price(self):
+        return self.quantity*self.supplier_product_id.price
