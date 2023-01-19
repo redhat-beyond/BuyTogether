@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from supplier.models import Supplier
+from delivery_location.models import DeliveryLocation
 from django.contrib.auth.decorators import user_passes_test
 from supplier_product.models import SupplierProduct
 from product.models import Product
 from django.contrib import messages
+from django.shortcuts import redirect
 
 
 def get_supplier(user):
@@ -24,23 +26,61 @@ def get_product_by_name_and_supplier(request, supplier):
     return None
 
 
-def action_search_product(request, supplier_product):
+def action_search_product(request, supplier_product, context):
     if supplier_product:
-        return render(request, 'supplier/suppliers.html', {'supplier_products': supplier_product})
+        context['supplier_products'] = supplier_product
+        return render(request, 'supplier/suppliers.html', context)
     else:
         messages.info(request, 'Product Not Found')
-        return render(request, 'supplier/suppliers.html')
+        return render(request, 'supplier/suppliers.html', context)
 
 
-def action_display_all_products(request, supplier):
+def action_display_all_products(request, supplier, context):
     data = set(SupplierProduct.objects.filter(user_name=supplier))
-    return render(request, 'supplier/suppliers.html', {'supplier_products': data})
+    context['supplier_products'] = data
+    return render(request, 'supplier/suppliers.html', context)
 
 
 @user_passes_test(get_supplier, login_url='Not allowed')
 def suppliers_page(request):
     supplier = get_supplier(request.user)
-    if 'searched_product' in request.GET:
-        return action_search_product(request, get_product_by_name_and_supplier(request, supplier))
+    context = show_deliveries(supplier)
 
-    return action_display_all_products(request, supplier)
+    if 'add' in request.GET:
+        location = request.GET['location'].capitalize()
+        date = request.GET['date']
+        create_delivery(supplier, location, date)
+        return redirect('/suppliers/')
+
+    if 'delete' in request.GET:
+        location = request.GET['location']
+        date = request.GET['date']
+        remove_delivery(supplier, location, date)
+        return redirect('/suppliers/')
+
+    if 'searched_product' in request.GET:
+        return action_search_product(request, get_product_by_name_and_supplier(request, supplier), context)
+
+    return action_display_all_products(request, supplier, context)
+
+
+def show_deliveries(supplier):
+    supplier_deliveries = DeliveryLocation.objects.filter(user_name=supplier)
+    message = ''
+    if len(supplier_deliveries) == 0:
+        message = "You don't have any deliveries yet"
+    return {'message': message, 'supplier_deliveries': supplier_deliveries}
+
+
+def create_delivery(supplier, location, date):
+    delivery = DeliveryLocation.objects.filter(user_name=supplier, location__icontains=location, date=date).first()
+    if delivery is not None:
+        return
+
+    DeliveryLocation(user_name=supplier, location=location, date=date).add_delivery_location()
+
+
+def remove_delivery(supplier, location, date):
+    delivery = DeliveryLocation.objects.filter(user_name=supplier, location__icontains=location, date=date).first()
+    if delivery is not None:
+        delivery.remove_delivery_location()

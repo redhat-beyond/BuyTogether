@@ -14,8 +14,29 @@
     {% include 'buy_together_app/help_parts/nav.html' %}
 
 	<div class="container">
-		<div class="container-A d-flex justify-content-center">
-			<dov> here will be something</p>
+		<div class="container-A justify-content-center" style="background-color:  rgb(34, 214, 234);;">
+			<p style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin-left: 60px">
+			{% if not supplier_deliveries %}
+				<p style="color: #000; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; left: 10px; position: relative; left: 8px;">{{message}}</p>
+			{% else %}
+				<ul style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+				{% for delivery in supplier_deliveries %}
+					<li>
+						Location: {{delivery.location}}<br>
+						Date: {{delivery.date}}<br><br>
+					</li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+			</p>
+			<form method = "get" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin-left: 30px;">
+				<input id="enter_location" type="text" placeholder="Enter location" required name="location"><br>
+				<input id="add_date" type="date" placeholder="Add date" required name="date">
+				<p>
+					<input type="submit" value="Add" name="add" style="color: green;">
+					<input type="submit" value="Delete" name="delete" style="color: red;">
+				</p>
+			</form>
 		</div>
 		<div class="container-B">
 			
@@ -53,7 +74,12 @@
 				</button>
 			</form>
 		</div>
+		
+			<div class="container_A d-flex justify-content-center">
+				<p> here will be something</p>
+			</div> -->
 
+		</div>
 	</div>
 </body>
 
