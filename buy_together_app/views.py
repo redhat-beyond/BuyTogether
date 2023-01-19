@@ -5,10 +5,14 @@ from client.forms import ClientForm
 from supplier.forms import SupplierForm
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from supplier.views import get_supplier
 
 
 def main_page(request):
-    return render(request, 'buy_together_app/main.html')
+    context = {}
+    if get_supplier(request.user):
+        context = {'supplier': True}
+    return render(request, 'buy_together_app/main.html', context)
 
 
 def description_page(request):
