@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Clients</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<link rel="stylesheet" href="/static/css/clients.css">
+</head>
+
+<body>
+    {% include 'buy_together_app/help_parts/nav.html' %}
+
+	<div class="container mt-5 p-3 align-center">
+		<div class="container_A d-flex justify-content-center">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<h3 id="form-title">New order</h3>
+				</div>
+				<b>----------------------------------------------------------</b><br>
+				<div class="d-flex justify-content-center">
+					<h5 id="form-title">Search by product name</h5>
+				</div><br>
+				<div style="text-align:center;">
+					<form action = "/ordered_product/new_order/search_product_by_product_name" method = "get">
+						<input id="product_name" type="text" required name="product_name"><br><br>
+						<input type="submit" value="search product"><br><br>
+					</form>
+				</div>
+				<b>----------------------------------------------------------</b>
+				<div class="d-flex justify-content-center">
+					<h5 id="form-title"><br>View all products in your location</h5>
+				</div><br>
+				<div style="text-align:center;">
+					<form action = "/ordered_product/new_order/search_product_by_location" method = "get">
+						<input type="submit" value="click here"><br><br>
+					</form>
+				</div>
+				<b>----------------------------------------------------------</b>
+				<div class="d-flex justify-content-center">
+					<h5 id="form-title"><br>Search supplier catalog by user name</h5>
+				</div><br>
+				<div style="text-align:center;">
+					<form action = "/ordered_product/new_order/search_supplier_catalog_by_user_name" method = "get">
+						<input id="supplier_user_name" type="text" required name="supplier_user_name"><br><br>
+						<input type="submit" value="search supplier catatlog"><br><br>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		<div class="container_A d-flex justify-content-center">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<h3 id="form-title">Orders List</h3>
+				</div>
+				<b>----------------------------------------------------------</b>
+				{% for order in orders %}
+					<b>product</b> {{order.supplier_product_id.qr_code.product_name}}<br>
+					<b>product description</b> {{order.supplier_product_id.qr_code.description}}<br>
+					<b>price</b> {{order.supplier_product_id.price}}<br>
+					<b>quantity</b> {{order.quantity}}<br>
+					<b>location</b> {{order.delivery_location_id.location}}<br>
+					<b>date</b> {{order.delivery_location_id.date}}<br>
+					<b>supplier</b> {{order.supplier_product_id.user_name.business_name}}<br>
+					<b>total price</b> {{ order.total_price }}<br>
+					<form action = "/ordered_product/orders/{{order.id}}" method = "get">
+						<label for="change_quantity">Change quantity:</label>
+						<input id="change_quantity" type="number" required name="quantity" max={{order.supplier_product_id.quantity}}>
+						<input type="submit" value="OK"><br>
+						<small>negative number - decrease quantity<br>
+						positive number - increase quantity</small><br>
+					</form><br>
+					<form action = "/ordered_product/orders/{{order.id}},delete" method = "get">
+						<label for="delete_order">Delete order: </label>
+						<input type="submit" value="delete"><br>
+					</form>
+					<b>----------------------------------------------------------</b>
+				{% endfor %}
+				<br><div class="d-flex justify-content-center">
+					<h5 id="form-title">{{ message }}</h5>
+				</div>
+				{% if orders %}
+					<div class="d-flex justify-content-center">
+						<h5 id="form-title">Total cost = {{ sum }}</h5>
+					</div>
+					<form action = "/ordered_product/new_order/pay_order" method = "get"align="center">
+						<input type="submit" value="pay order"><br>
+					</form><br>
+				{% endif %}
+			</div>
+		</div>
+</body>
+</html>
