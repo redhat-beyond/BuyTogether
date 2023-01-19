@@ -1,0 +1,14 @@
+p{
+    color: beige;
+    margin-top: 15px;
+}
+
+.nav_sides{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;  
+}
+
+.nav_side_element{
+    margin-right: 10px;
+}
