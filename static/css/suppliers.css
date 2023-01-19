@@ -8,11 +8,38 @@ body{
     align-items: center;
 }
 
-.container_A{
+.container-A{
     background-color: rgb(229, 127, 2);
     height: 500px;
-    width: 30%
+    width:20%
 }
 
-.container_B{background-color: brown;
+.container-B{background-color: brown;
+    width:40%
+}
+
+.container-C{
+    background-color: rgb(34, 214, 234);
+    height: 500px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.container-text-table{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text{
+    font-family:"Lucida Console", "Courier New", monospace;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.get_all_button{
+    position: relative;
+    bottom: 0px;
+    left: 30%;
 }
